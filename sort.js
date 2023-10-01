@@ -46,18 +46,55 @@ const merge = (la, ra) => {
   return [...sortedArr, ...la, ...ra]
 }
 
-const quickSort = arr => {
+// building around the pivot
+function quickSort(array) {
+  if(array.length <= 1) return array;
+
+  const pivot = array[0];
+  const left = [];
+  const right = [];
+
+  for (let i = 1; i < array.length; i++) {
+    if(array[i] < pivot) {
+      left.push(array[i])
+    } else {
+      right.push(array[i])
+    }
+  }
+  return [...quickSort(left), pivot, ...quickSort(right)]
+}
+
+//ASK ABOUT LINE 70 SPREAD OPPERATOR MAKING CODE WORK*****WONT WORK WITHOUT SPREAD *** LINE 71
+const selectionSort = (arr, start = 0) => {
   
+  if (start >= arr.length) return arr;
+  // if (start >= arr.length) return [...arr];
+
+  let min = arr[start];
+  let minIndex;
+  let temp;
+
+  for (let i = start + 1; i < arr.length; i++){
+    if (arr[i] < min){
+      min = arr[i]
+      minIndex = i;
+    }
+  }
+
+  temp = arr[start];
+  arr[start] = min
+  arr[minIndex] = temp;
+
+  return selectionSort(arr, ++start)
 }
 
 
-
-
-
-
-let testArr = [-2,5,2,15,-55,63,99,187,8]
+let testArr = [-2,5,3,15,-55,63,99,187,8]
 
 // console.log(sortAccending(testArr))
 // console.log(sortDecending(testArr))
 // console.log(bubbleSort(testArr))
 // console.log(mergeSort(testArr))
+// console.log(quickSort(testArr))
+console.log(selectionSort(testArr))
+
